@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLACKPINK IN YOUR AREA | 官方風格介紹網站</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts (Noto Sans TC 與 Montserrat) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <!-- 自訂 Tailwind 設定與專屬 CSS 動畫 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bp: {
+                            black: '#050505',
+                            dark: '#111111',
+                            pink: '#FF2E93',
+                            softpink: '#F4A6B8',
+                            glow: 'rgba(255, 46, 147, 0.6)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        display: ['"Montserrat"', '"Noto Sans TC"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* 基礎黑粉美學設定 */
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+            transition: box-shadow 0.5s ease;
+        }
+
+        /* 應援槌開啟時的全螢幕粉紅光暈模式 */
+        body.lightstick-active {
+            box-shadow: inset 0 0 60px rgba(255, 46, 147, 0.65), inset 0 0 120px rgba(244, 166, 184, 0.3);
+        }
+
+        /* 霓虹文字發光效果 */
+        .neon-text {
+            text-shadow: 0 0 10px rgba(255, 46, 147, 0.7), 0 0 25px rgba(255, 46, 147, 0.5);
+        }
+
+        .neon-border {
+            box-shadow: 0 0 15px rgba(255, 46, 147, 0.4);
+        }
+
+        /* BLACKPINK 經典反轉 C 與 K 標誌樣式（無多餘空格） */
+        .bp-logo-box {
+            border: 2px solid #F4A6B8;
+            letter-spacing: 0.08em;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px rgba(244, 166, 184, 0.3);
+        }
+        .flip-char {
+            display: inline-block;
+            transform: scaleX(-1);
+        }
+
+        /* 導覽分頁啟用狀態 */
+        .nav-tab-active {
+            color: #FF2E93 !important;
+            border-bottom: 2px solid #FF2E93;
+            padding-bottom: 4px;
+        }
+
+        /* 飄浮應援粒子動畫 */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-85vh) scale(1.4) rotate(25deg);
+                opacity: 0;
+            }
+        }
+        .floating-particle {
+            position: fixed;
+            bottom: 20px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: floatUp 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        /* 唱片旋轉動畫 */
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .vinyl-spin {
+            animation: spinSlow 8s linear infinite;
+        }
+        .vinyl-paused {
+            animation-play-state: paused;
+        }
+
+        /* 音波跳動動畫 */
+        @keyframes eqBar {
+            0%, 100% { height: 20%; }
+            50% { height: 100%; }
+        }
+        .eq-active .bar-1 { animation: eqBar 0.6s infinite ease-in-out; }
+        .eq-active .bar-2 { animation: eqBar 0.4s infinite ease-in-out 0.1s; }
+        .eq-active .bar-3 { animation: eqBar 0.7s infinite ease-in-out 0.2s; }
+        .eq-active .bar-4 { animation: eqBar 0.5s infinite ease-in-out 0.15s; }
+
+        /* 應援槌敲擊搖晃動畫 */
+        @keyframes hammerShake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-18deg); }
+            75% { transform: rotate(18deg); }
+        }
+        .hammer-active {
+            animation: hammerShake 0.6s ease-in-out infinite;
+        }
+
+        /* ==================== 入場動畫專屬樣式 (Intro Curtain & Entrance) ==================== */
+        @keyframes laserExpand {
+            0% { width: 0%; opacity: 0; }
+            40% { opacity: 1; }
+            100% { width: 100%; opacity: 0.85; }
+        }
+        .intro-laser-line {
+            animation: laserExpand 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes logoReveal {
+            0% { opacity: 0; transform: scale(0.82); filter: blur(8px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+        .intro-logo-anim {
+            animation: logoReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+            opacity: 0;
+        }
+
+        @keyframes subtitleReveal {
+            0% { opacity: 0; letter-spacing: 0.6em; transform: translateY(10px); }
+            100% { opacity: 1; letter-spacing: 0.35em; transform: translateY(0); }
+        }
+        .intro-sub-anim {
+            animation: subtitleReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+            opacity: 0;
+        }
+
+        /* 舞台左右雙開布幕轉場 */
+        .curtain-panel {
+            transition: transform 1.05s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .curtain-open-left {
+            transform: translateX(-100%);
+        }
+        .curtain-open-right {
+            transform: translateX(100%);
+        }
+
+        /* 主視覺區布幕拉開後的階梯式進場動畫 */
+        .hero-stagger {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        body.site-entered .hero-stagger {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 自訂捲軸 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF2E93;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-bp-pink selection:text-white overflow-hidden">
+
+    <!-- ==================== 0. 全螢幕奢華舞台入場動畫 (Stage Intro Curtain) ==================== -->
+    <div id="intro-overlay" class="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-auto">
+        <!-- 左側舞台布幕 -->
+        <div id="curtain-left" class="curtain-panel fixed top-0 left-0 w-1/2 h-full bg-[#050505] border-r border-bp-pink/60 shadow-[10px_0_40px_rgba(255,46,147,0.35)] z-10 overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_right_center,_rgba(255,46,147,0.22)_0%,_transparent_70%)]"></div>
+        </div>
+        <!-- 右側舞台布幕 -->
+        <div id="curtain-right" class="curtain-panel fixed top-0 right-0 w-1/2 h-full bg-[#050505] border-l border-bp-pink/60 shadow-[-10px_0_40px_rgba(255,46,147,0.35)] z-10 overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_left_center,_rgba(255,46,147,0.22)_0%,_transparent_70%)]"></div>
+        </div>
+
+        <!-- 中央舞台發光視覺內容 -->
+        <div id="intro-center-content" class="relative z-20 w-full max-w-2xl px-6 text-center transition-all duration-500">
+            <!-- 橫向粉紅雷射光束 -->
+            <div class="w-full h-[2px] mx-auto mb-8 bg-gradient-to-r from-transparent via-bp-pink to-transparent shadow-[0_0_20px_#FF2E93] intro-laser-line"></div>
+
+            <!-- 經典反轉 Logo 進場 -->
+            <div class="intro-logo-anim mb-4">
+                <div class="bp-logo-box inline-block px-6 py-3 sm:px-8 sm:py-4 rounded-xl text-bp-softpink font-display font-black text-3xl sm:text-5xl md:text-6xl shadow-[0_0_35px_rgba(255,46,147,0.5)]">
+                    BLΛ<span class="flip-char">C</span>KPIИ<span class="flip-char">K</span>
+                </div>
+            </div>
+
+            <!-- 副標題 -->
+            <p class="intro-sub-anim font-display font-bold text-xs sm:text-base text-bp-pink neon-text uppercase mb-8">
+                IN YOUR AREA
+            </p>
+
+            <!-- 四位成員象徵菱形光點 (Jisoo, Jennie, Rosé, Lisa) -->
+            <div class="flex items-center justify-center gap-4 sm:gap-6 mb-6">
+                <div id="intro-gem-0" class="w-3 h-3 rotate-45 border border-bp-pink/50 bg-zinc-900 transition-all duration-300"></div>
+                <div id="intro-gem-1" class="w-3 h-3 rotate-45 border border-bp-pink/50 bg-zinc-900 transition-all duration-300"></div>
+                <div id="intro-gem-2" class="w-3 h-3 rotate-45 border border-bp-pink/50 bg-zinc-900 transition-all duration-300"></div>
+                <div id="intro-gem-3" class="w-3 h-3 rotate-45 border border-bp-pink/50 bg-zinc-900 transition-all duration-300"></div>
+            </div>
+
+            <!-- 舞台載入進度條與百分比 -->
+            <div class="max-w-xs mx-auto">
+                <div class="w-full h-1 bg-zinc-900 rounded-full overflow-hidden mb-2 border border-white/10">
+                    <div id="intro-progress-bar" class="h-full w-0 bg-gradient-to-r from-bp-softpink via-bp-pink to-pink-500 shadow-[0_0_12px_#FF2E93] transition-all duration-100"></div>
+                </div>
+                <div class="flex justify-between items-center text-[11px] font-display tracking-widest text-gray-400">
+                    <span>STAGE LIGHTING</span>
+                    <span id="intro-percent" class="text-bp-softpink font-bold">0%</span>
+                </div>
+            </div>
+
+            <!-- 下方雷射光束 -->
+            <div class="w-full h-[2px] mx-auto mt-8 bg-gradient-to-r from-transparent via-bp-pink to-transparent shadow-[0_0_20px_#FF2E93] intro-laser-line"></div>
+        </div>
+
+        <!-- 右下角跳過按鈕 -->
+        <button id="skip-intro-btn" onclick="finishIntro()" class="fixed bottom-6 right-6 z-30 px-4 py-2 rounded-full bg-black/80 border border-bp-pink/50 text-bp-softpink hover:bg-bp-pink hover:text-white font-display text-xs font-bold tracking-widest transition-all cursor-pointer">
+            SKIP INTRO &gt;
+        </button>
+    </div>
+
+    <!-- ==================== 1. 頂部導覽列 (Navigation Bar) ==================== -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-black/85 backdrop-blur-md border-b border-bp-pink/30 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- 品牌標誌 (反轉 C 與 K 致敬官方 Logo，無空格) -->
+                <button type="button" onclick="switchTab('hero')" class="flex items-center group cursor-pointer">
+                    <div class="bp-logo-box px-3 py-1.5 rounded text-bp-softpink font-display font-black text-xl sm:text-2xl transition-transform duration-300 group-hover:scale-105">
+                        BLΛ<span class="flip-char">C</span>KPIИ<span class="flip-char">K</span>
+                    </div>
+                </button>
+
+                <!-- 桌面版分頁導覽連結 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <button type="button" data-tab="about" onclick="switchTab('about')" class="nav-tab-btn text-sm font-bold tracking-wider text-gray-300 hover:text-bp-pink transition-colors cursor-pointer">關於團體</button>
+                    <button type="button" data-tab="members" onclick="switchTab('members')" class="nav-tab-btn text-sm font-bold tracking-wider text-gray-300 hover:text-bp-pink transition-colors cursor-pointer">成員介紹</button>
+                    <button type="button" data-tab="music" onclick="switchTab('music')" class="nav-tab-btn text-sm font-bold tracking-wider text-gray-300 hover:text-bp-pink transition-colors cursor-pointer">熱門音樂</button>
+                    <button type="button" data-tab="fanzone" onclick="switchTab('fanzone')" class="nav-tab-btn text-sm font-bold tracking-wider text-gray-300 hover:text-bp-pink transition-colors cursor-pointer">BLINK 應援區</button>
+                    <button type="button" onclick="replayIntro()" class="px-3.5 py-2 rounded-full bg-zinc-900 border border-bp-softpink/40 text-bp-softpink text-xs font-bold hover:border-bp-pink hover:text-bp-pink transition-all cursor-pointer">
+                        重播入場
+                    </button>
+                    <button type="button" onclick="triggerHeartBurst()" class="px-4 py-2 rounded-full bg-bp-pink/20 border border-bp-pink text-bp-pink text-xs font-bold hover:bg-bp-pink hover:text-white transition-all cursor-pointer">
+                        送出應援
+                    </button>
+                </div>
+
+                <!-- 手機版漢堡選單按鈕 -->
+                <div class="md:hidden flex items-center gap-2">
+                    <button type="button" onclick="replayIntro()" class="px-3 py-1.5 rounded-full bg-zinc-900 border border-bp-softpink/40 text-bp-softpink text-xs font-bold">
+                        入場動畫
+                    </button>
+                    <button id="mobile-menu-btn" type="button" aria-label="開啟選單" class="text-bp-softpink hover:text-bp-pink p-2 rounded-lg focus:outline-none">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 手機版分頁下拉選單 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-bp-dark border-b border-bp-pink/40 px-4 pt-2 pb-6 space-y-2">
+            <button type="button" data-tab="about" onclick="switchTab('about')" class="mobile-tab-btn w-full text-left block py-2.5 px-3 rounded-lg text-base font-bold text-gray-200 hover:bg-bp-pink/20 hover:text-bp-pink">關於團體</button>
+            <button type="button" data-tab="members" onclick="switchTab('members')" class="mobile-tab-btn w-full text-left block py-2.5 px-3 rounded-lg text-base font-bold text-gray-200 hover:bg-bp-pink/20 hover:text-bp-pink">成員介紹</button>
+            <button type="button" data-tab="music" onclick="switchTab('music')" class="mobile-tab-btn w-full text-left block py-2.5 px-3 rounded-lg text-base font-bold text-gray-200 hover:bg-bp-pink/20 hover:text-bp-pink">熱門音樂</button>
+            <button type="button" data-tab="fanzone" onclick="switchTab('fanzone')" class="mobile-tab-btn w-full text-left block py-2.5 px-3 rounded-lg text-base font-bold text-gray-200 hover:bg-bp-pink/20 hover:text-bp-pink">BLINK 應援區</button>
+        </div>
+    </nav>
+
+    <!-- ==================== 分頁容器 ==================== -->
+    <main id="tab-container" class="min-h-screen">
+
+        <!-- ==================== 2. 英雄主視覺區 (Hero Tab) ==================== -->
+        <section id="hero" class="tab-panel relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+            <!-- 背景幾何光暈與網格裝飾 -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,46,147,0.22)_0%,_rgba(5,5,5,1)_70%)]"></div>
+            <div class="absolute top-1/4 -left-20 w-72 h-72 bg-bp-pink/20 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-bp-softpink/15 rounded-full blur-3xl animate-pulse"></div>
+
+            <!-- 裝飾用皇冠幾何 SVG 背景 -->
+            <svg class="absolute w-[520px] h-[520px] opacity-10 pointer-events-none text-bp-pink" viewBox="0 0 200 200" fill="none">
+                <polygon points="100,20 180,160 20,160" stroke="currentColor" stroke-width="1.5"/>
+                <polygon points="100,180 180,40 20,40" stroke="#F4A6B8" stroke-width="1"/>
+                <circle cx="100" cy="100" r="75" stroke="currentColor" stroke-width="0.8" stroke-dasharray="4 4"/>
+            </svg>
+
+            <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
+                <!-- 徽章 -->
+                <div class="hero-stagger inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-bp-pink/15 border border-bp-pink/50 text-bp-softpink text-xs sm:text-sm font-bold tracking-widest mb-6" style="transition-delay: 0.1s;">
+                    <span>THE GLOBAL K-POP QUEEN</span>
+                </div>
+
+                <!-- 主標題 -->
+                <h1 class="hero-stagger font-display font-black text-5xl sm:text-7xl md:text-8xl tracking-tight text-white mb-4" style="transition-delay: 0.25s;">
+                    BLACK<span class="text-bp-pink neon-text">PINK</span>
+                </h1>
+
+                <!-- 經典口號副標題 -->
+                <p class="hero-stagger font-display font-bold text-xl sm:text-3xl md:text-4xl tracking-[0.25em] text-bp-softpink mb-6 uppercase" style="transition-delay: 0.4s;">
+                    BLACKPINK IN YOUR AREA
+                </p>
+
+                <p class="hero-stagger max-w-2xl mx-auto text-gray-300 text-base sm:text-lg leading-relaxed mb-10" style="transition-delay: 0.55s;">
+                    融合強烈的「Black」Girl Crush 酷炫魅力與甜美的「Pink」時尚優雅，以無可匹敵的舞台張力與音樂能量席捲全球的現象級女子天團。
+                </p>
+
+                <!-- 互動按鈕群組 -->
+                <div class="hero-stagger flex flex-col sm:flex-row items-center justify-center gap-4" style="transition-delay: 0.7s;">
+                    <button type="button" onclick="triggerHeartBurst()" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-bp-pink to-pink-600 text-white font-bold text-base tracking-wider shadow-lg shadow-bp-pink/40 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                        <span>點亮粉紅應援浪潮</span>
+                    </button>
+                    <button type="button" onclick="switchTab('members')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-transparent border-2 border-bp-softpink text-bp-softpink font-bold text-base tracking-wider hover:bg-bp-softpink hover:text-black transition-all cursor-pointer">
+                        探索四位成員 &gt;
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 3. 團體簡介 (About Tab) ==================== -->
+        <section id="about" class="tab-panel hidden min-h-screen py-28 bg-bp-dark relative border-t border-bp-pink/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <span class="text-bp-pink font-display font-bold tracking-widest text-sm uppercase">ABOUT THE GROUP</span>
+                    <h2 class="text-3xl sm:text-5xl font-black mt-2">關於 <span class="text-bp-pink">BLACKPINK</span></h2>
+                    <div class="w-20 h-1 bg-bp-pink mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <!-- 雙重概念解析 + 核心數據 -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    <!-- 左側：概念故事 -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="p-6 sm:p-8 rounded-2xl bg-black border border-bp-pink/30 hover:border-bp-pink transition-colors">
+                            <h3 class="text-2xl font-bold text-bp-softpink mb-3">「漂亮並不代表全部」的反轉魅力</h3>
+                            <p class="text-gray-300 leading-relaxed mb-4">
+                                團名 <strong class="text-white">BLACKPINK</strong> 是在公認最美麗的顏色「粉紅色（Pink）」上，稍微加以否定的「黑色（Black）」，傳達出她們不僅擁有出眾的外貌，更兼具頂尖的唱跳實力與前衛態度。
+                            </p>
+                            <p class="text-gray-300 leading-relaxed">
+                                自 2016 年以雙主打單曲《WHISTLE》與《BOOMBAYAH》震撼出道以來，她們不斷打破全球音樂榜單紀錄，成為首個登上美國 Coachella 音樂節主舞台並擔任領銜嘉賓的韓國藝人，更是全球四大時裝週的時尚寵兒。
+                            </p>
+                        </div>
+
+                        <!-- 關鍵資訊徽章網格 -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <div class="p-4 rounded-xl bg-black border border-white/10 text-center">
+                                <div class="text-xs text-gray-400 mb-1">出道日期</div>
+                                <div class="font-display font-bold text-bp-pink text-base sm:text-lg">2016.08.08</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-black border border-white/10 text-center">
+                                <div class="text-xs text-gray-400 mb-1">經紀公司</div>
+                                <div class="font-display font-bold text-white text-base sm:text-lg">YG 娛樂</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-black border border-white/10 text-center">
+                                <div class="text-xs text-gray-400 mb-1">官方粉絲名</div>
+                                <div class="font-display font-bold text-bp-softpink text-base sm:text-lg">BLINK</div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-black border border-white/10 text-center">
+                                <div class="text-xs text-gray-400 mb-1">官方應援物</div>
+                                <div class="font-bold text-bp-pink text-base sm:text-lg">粉紅槌 BI-Ping-Bong</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右側：世界紀錄成就卡片 -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <div class="p-6 rounded-2xl bg-gradient-to-br from-bp-pink/20 to-black border border-bp-pink/40">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-bp-pink/20 flex items-center justify-center font-display font-black text-sm text-bp-pink shrink-0">YT</div>
+                                <div>
+                                    <div class="font-display font-black text-2xl text-white">YouTube 全球第一</div>
+                                    <p class="text-sm text-gray-300">全球訂閱人數最高的音樂藝人頻道，多支 MV 突破 10 億至 20 億次觀看。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-6 rounded-2xl bg-gradient-to-br from-bp-softpink/15 to-black border border-bp-softpink/30">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-bp-softpink/20 flex items-center justify-center font-display font-black text-sm text-bp-softpink shrink-0">BB</div>
+                                <div>
+                                    <div class="font-display font-black text-2xl text-white">Billboard 200 冠軍</div>
+                                    <p class="text-sm text-gray-300">正規二輯《BORN PINK》空降美國告示牌專輯榜與英國官方專輯榜雙料冠軍。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-6 rounded-2xl bg-gradient-to-br from-bp-pink/20 to-black border border-bp-pink/40">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-bp-pink/20 flex items-center justify-center font-display font-black text-sm text-bp-pink shrink-0">TOUR</div>
+                                <div>
+                                    <div class="font-display font-black text-2xl text-white">BORN PINK 世界巡演</div>
+                                    <p class="text-sm text-gray-300">橫跨全球 34 座城市、66 場演出，吸引超過 180 萬名觀眾創下女團歷史紀錄。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 4. 成員介紹 (Members Tab) ==================== -->
+        <section id="members" class="tab-panel hidden min-h-screen py-28 bg-bp-black relative border-t border-bp-pink/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <span class="text-bp-pink font-display font-bold tracking-widest text-sm uppercase">THE FOUR QUEENS</span>
+                    <h2 class="text-3xl sm:text-5xl font-black mt-2">成員 <span class="text-bp-pink">介紹</span></h2>
+                    <p class="text-gray-400 mt-3 text-sm sm:text-base">點擊任一成員卡片，查看個人代表作、時尚代言與詳細檔案</p>
+                    <div class="w-20 h-1 bg-bp-pink mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <!-- 響應式 4 欄成員網格 -->
+                <div id="members-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- 卡片將由 JavaScript 動態渲染 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 5. 熱門作品與專輯 (Discography / Hit Songs Tab) ==================== -->
+        <section id="music" class="tab-panel hidden min-h-screen py-28 bg-bp-dark relative border-t border-bp-pink/20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <span class="text-bp-pink font-display font-bold tracking-widest text-sm uppercase">DISCOGRAPHY &amp; HITS</span>
+                    <h2 class="text-3xl sm:text-5xl font-black mt-2">熱門音樂 <span class="text-bp-pink">精選</span></h2>
+                    <p class="text-gray-400 mt-3 text-sm sm:text-base">點擊下方曲目切換播放器，或直接開啟 YouTube 觀賞官方歌曲 MV</p>
+                    <div class="w-20 h-1 bg-bp-pink mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <!-- 左側：模擬黑膠唱片播放器 -->
+                    <div class="lg:col-span-5 bg-black p-8 rounded-3xl border border-bp-pink/40 shadow-2xl shadow-bp-pink/10 text-center">
+                        <!-- 黑膠唱片視覺 -->
+                        <div class="relative w-48 h-48 sm:w-56 sm:h-56 mx-auto mb-6">
+                            <div id="vinyl-disc" class="w-full h-full rounded-full bg-gradient-to-tr from-zinc-900 via-zinc-800 to-black border-4 border-bp-pink/60 flex items-center justify-center shadow-lg vinyl-spin">
+                                <div class="w-40 h-40 rounded-full border border-white/10 flex items-center justify-center">
+                                    <div class="w-28 h-28 rounded-full border border-white/10 flex items-center justify-center">
+                                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-bp-pink to-pink-700 flex flex-col items-center justify-center text-white p-2 shadow-inner">
+                                            <span class="font-display font-black text-[10px] tracking-widest">BLACKPINK</span>
+                                            <div class="w-3 h-3 rounded-full bg-black mt-1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 動態音波指示器 -->
+                            <div id="eq-bars" class="eq-active absolute -bottom-2 right-2 bg-black/90 border border-bp-pink px-2.5 py-1.5 rounded-full flex items-end gap-1 h-7">
+                                <span class="bar-1 w-1 bg-bp-pink rounded-full"></span>
+                                <span class="bar-2 w-1 bg-bp-softpink rounded-full"></span>
+                                <span class="bar-3 w-1 bg-bp-pink rounded-full"></span>
+                                <span class="bar-4 w-1 bg-bp-softpink rounded-full"></span>
+                            </div>
+                        </div>
+
+                        <!-- 當前曲目資訊 -->
+                        <div class="mb-4">
+                            <span id="player-album" class="text-xs font-bold tracking-widest text-bp-softpink uppercase">SQUARE UP (2018)</span>
+                            <h3 id="player-title" class="font-display font-black text-2xl sm:text-3xl text-white mt-1">DDU-DU DDU-DU</h3>
+                        </div>
+
+                        <!-- 歌詞亮點顯示框 -->
+                        <div class="p-4 rounded-xl bg-bp-pink/10 border border-bp-pink/30 mb-5 min-h-[76px] flex items-center justify-center">
+                            <p id="player-lyric" class="text-sm sm:text-base italic font-medium text-bp-softpink">
+                                "Hit you with that ddu-du ddu-du du!"
+                            </p>
+                        </div>
+
+                        <!-- 實際 YouTube 歌曲連結 -->
+                        <div class="mb-6">
+                            <a id="player-yt-link" href="https://www.youtube.com/watch?v=IHNznwqx8sY" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-3 px-5 rounded-xl bg-zinc-900 hover:bg-bp-pink border border-bp-pink/60 text-bp-softpink hover:text-white font-bold text-sm tracking-wider transition-all">
+                                <span>前往 YouTube 聆聽此歌曲</span>
+                                <span>-&gt;</span>
+                            </a>
+                        </div>
+
+                        <!-- 模擬進度條 -->
+                        <div class="mb-6">
+                            <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
+                                <div id="player-progress" class="bg-gradient-to-r from-bp-softpink to-bp-pink h-full w-1/3 transition-all duration-300"></div>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-400 mt-1.5 font-display">
+                                <span id="player-time">01:12</span>
+                                <span id="player-duration">03:29</span>
+                            </div>
+                        </div>
+
+                        <!-- 播放 / 暫停與切換按鈕 -->
+                        <div class="flex items-center justify-center gap-6">
+                            <button type="button" onclick="prevTrack()" aria-label="上一首" class="px-3.5 py-2.5 rounded-full bg-zinc-900 hover:bg-bp-pink/20 text-white hover:text-bp-pink font-bold text-xs transition-colors cursor-pointer">
+                                上一首
+                            </button>
+                            <button id="play-pause-btn" type="button" onclick="togglePlay()" class="px-7 py-3 rounded-full bg-bp-pink text-white font-bold text-sm tracking-wider hover:bg-pink-600 shadow-lg shadow-bp-pink/40 transition-all cursor-pointer">
+                                暫停預覽
+                            </button>
+                            <button type="button" onclick="nextTrack()" aria-label="下一首" class="px-3.5 py-2.5 rounded-full bg-zinc-900 hover:bg-bp-pink/20 text-white hover:text-bp-pink font-bold text-xs transition-colors cursor-pointer">
+                                下一首
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 右側：熱門曲目清單 -->
+                    <div class="lg:col-span-7 space-y-3" id="track-list">
+                        <!-- 曲目列將由 JS 動態產生 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 6. 粉絲應援互動區 (BLINK Fan Zone Tab) ==================== -->
+        <section id="fanzone" class="tab-panel hidden min-h-screen py-28 bg-bp-black relative border-t border-bp-pink/20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <span class="text-bp-pink font-display font-bold tracking-widest text-sm uppercase">BLINK FAN ZONE</span>
+                    <h2 class="text-3xl sm:text-5xl font-black mt-2">BLINK <span class="text-bp-pink">應援互動區</span></h2>
+                    <p class="text-gray-400 mt-3 text-sm sm:text-base">點亮你的粉紅應援槌，為 BLACKPINK 留下專屬應援宣言！</p>
+                    <div class="w-20 h-1 bg-bp-pink mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- 左側：粉紅應援槌互動開關 -->
+                    <div class="lg:col-span-5 p-8 rounded-3xl bg-bp-dark border border-bp-pink/30 flex flex-col items-center justify-center text-center">
+                        <!-- 自製粉紅應援槌 (BI-Ping-Bong) SVG -->
+                        <div id="lightstick-graphic" class="w-36 h-44 mb-6 flex items-center justify-center transition-all duration-500">
+                            <svg viewBox="0 0 160 200" class="w-full h-full drop-shadow-[0_0_12px_rgba(255,46,147,0.4)]">
+                                <rect x="70" y="85" width="20" height="95" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="2"/>
+                                <rect x="73" y="105" width="14" height="4" rx="2" fill="#FF2E93"/>
+                                <path d="M80 65 C65 40, 20 45, 25 75 C28 95, 65 100, 80 85 Z" fill="#FF2E93" class="transition-opacity duration-300"/>
+                                <path d="M80 65 C95 40, 140 45, 135 75 C132 95, 95 100, 80 85 Z" fill="#FF2E93" class="transition-opacity duration-300"/>
+                                <rect x="66" y="60" width="28" height="30" rx="6" fill="#09090b" stroke="#F4A6B8" stroke-width="2"/>
+                                <circle cx="80" cy="75" r="5" fill="#F4A6B8"/>
+                            </svg>
+                        </div>
+
+                        <h3 class="text-2xl font-bold text-white mb-2">粉紅應援槌 (BI-Ping-Bong)</h3>
+                        <p id="lightstick-status" class="text-sm text-gray-400 mb-6">目前狀態：待機中（點擊下方開關點亮全場）</p>
+
+                        <button id="lightstick-toggle-btn" type="button" onclick="toggleLightstick()" class="w-full py-4 px-6 rounded-full bg-zinc-800 border-2 border-bp-pink text-bp-pink font-bold text-base tracking-wider hover:bg-bp-pink hover:text-white transition-all cursor-pointer flex items-center justify-center gap-2">
+                            <span>開啟粉紅光暈模式</span>
+                        </button>
+                    </div>
+
+                    <!-- 右側：BLINK 即時應援留言板 -->
+                    <div class="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-bp-dark border border-bp-pink/30 flex flex-col">
+                        <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                            <span>全球 BLINK 應援留言牆</span>
+                        </h3>
+
+                        <!-- 留言輸入表單 -->
+                        <form id="fan-form" onsubmit="submitFanMessage(event)" class="space-y-3 mb-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <input type="text" id="fan-name" required maxlength="20" placeholder="你的 BLINK 暱稱" class="sm:col-span-1 px-4 py-3 rounded-xl bg-black border border-white/15 text-white text-sm focus:outline-none focus:border-bp-pink">
+                                <select id="fan-bias" class="sm:col-span-2 px-4 py-3 rounded-xl bg-black border border-white/15 text-bp-softpink text-sm focus:outline-none focus:border-bp-pink">
+                                    <option value="OT4 全體應援">應援對象：OT4 全體成員</option>
+                                    <option value="JISOO 金智秀">應援對象：JISOO 金智秀</option>
+                                    <option value="JENNIE 金珍妮">應援對象：JENNIE 金珍妮</option>
+                                    <option value="ROSÉ 朴彩英">應援對象：ROSÉ 朴彩英</option>
+                                    <option value="LISA 拉莉莎">應援對象：LISA 拉莉莎</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <input type="text" id="fan-message" required maxlength="100" placeholder="寫下你想對 BLACKPINK 說的話..." class="flex-1 px-4 py-3 rounded-xl bg-black border border-white/15 text-white text-sm focus:outline-none focus:border-bp-pink">
+                                <button type="submit" class="px-6 py-3 rounded-xl bg-bp-pink hover:bg-pink-600 text-white font-bold text-sm transition-colors cursor-pointer shrink-0">
+                                    發送應援
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- 留言顯示清單 -->
+                        <div id="fan-board" class="space-y-3 max-h-72 overflow-y-auto pr-2">
+                            <!-- 預設精選應援留言 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== 7. 頁尾 (Footer) ==================== -->
+    <footer class="bg-black border-t border-bp-pink/30 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left">
+                <div class="bp-logo-box inline-block px-3 py-1 rounded text-bp-softpink font-display font-black text-lg mb-2">
+                    BLΛ<span class="flip-char">C</span>KPIИ<span class="flip-char">K</span>
+                </div>
+                <p class="text-xs text-gray-500">
+                    © 2026 BLACKPINK Fan Tribute Showcase. 本網站為 K-POP 音樂與設計展示用途。
+                </p>
+            </div>
+
+            <!-- 社群媒體連結 -->
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="https://www.youtube.com/@BLACKPINK" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full bg-zinc-900 hover:bg-bp-pink text-gray-300 hover:text-white text-xs font-bold transition-colors">YouTube</a>
+                <a href="https://www.instagram.com/blackpinkofficial/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full bg-zinc-900 hover:bg-bp-pink text-gray-300 hover:text-white text-xs font-bold transition-colors">Instagram</a>
+                <a href="https://open.spotify.com/artist/41MozSoPIsR1dJM0PTPvFS" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full bg-zinc-900 hover:bg-bp-pink text-gray-300 hover:text-white text-xs font-bold transition-colors">Spotify</a>
+                <a href="https://weverse.io/blackpink" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-full bg-zinc-900 hover:bg-bp-pink text-gray-300 hover:text-white text-xs font-bold transition-colors">Weverse</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== 成員詳細資料彈窗 (Member Modal) ==================== -->
+    <div id="member-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-sm" onclick="closeMemberModal(event)">
+        <div class="relative w-full max-w-xl bg-bp-dark border-2 border-bp-pink rounded-3xl p-6 sm:p-8 shadow-2xl shadow-bp-pink/30 transform transition-all" onclick="event.stopPropagation()">
+            <!-- 關閉按鈕 -->
+            <button type="button" onclick="closeMemberModal()" aria-label="關閉視窗" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-black border border-white/20 text-gray-300 hover:text-bp-pink hover:border-bp-pink flex items-center justify-center font-bold cursor-pointer">
+                X
+            </button>
+
+            <div id="modal-content">
+                <!-- 動態填入成員詳細檔案 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 自訂提示訊息框 -->
+    <div id="toast-box" class="fixed bottom-6 right-6 z-50 hidden px-5 py-3 rounded-xl bg-bp-pink text-white font-bold text-sm shadow-lg shadow-bp-pink/40 transition-all"></div>
+
+    <!-- ==================== JavaScript 互動邏輯 ==================== -->
+    <script>
+        // 0. 舞台入場動畫控制邏輯 (Stage Curtain Preloader)
+        let introTimer = null;
+        let isIntroFinished = false;
+
+        function startIntroSequence() {
+            isIntroFinished = false;
+            const overlay = document.getElementById('intro-overlay');
+            const leftCurtain = document.getElementById('curtain-left');
+            const rightCurtain = document.getElementById('curtain-right');
+            const centerContent = document.getElementById('intro-center-content');
+            const skipBtn = document.getElementById('skip-intro-btn');
+            const bar = document.getElementById('intro-progress-bar');
+            const percentText = document.getElementById('intro-percent');
+
+            document.body.classList.remove('site-entered');
+            document.body.classList.add('overflow-hidden');
+            overlay.classList.remove('hidden', 'pointer-events-none');
+            leftCurtain.classList.remove('curtain-open-left');
+            rightCurtain.classList.remove('curtain-open-right');
+            centerContent.style.opacity = '1';
+            centerContent.style.transform = 'scale(1)';
+            skipBtn.style.opacity = '1';
+
+            for (let i = 0; i < 4; i++) {
+                const gem = document.getElementById(`intro-gem-${i}`);
+                if (gem) {
+                    gem.className = 'w-3 h-3 rotate-45 border border-bp-pink/50 bg-zinc-900 transition-all duration-300';
+                }
+            }
+
+            overlay.querySelectorAll('.intro-laser-line, .intro-logo-anim, .intro-sub-anim').forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight;
+                el.style.animation = '';
+            });
+
+            let progress = 0;
+            clearInterval(introTimer);
+
+            introTimer = setInterval(() => {
+                progress += 2;
+                if (progress > 100) progress = 100;
+
+                bar.style.width = `${progress}%`;
+                percentText.textContent = `${progress}%`;
+
+                const activeGems = Math.floor(progress / 25);
+                for (let i = 0; i < activeGems && i < 4; i++) {
+                    const gem = document.getElementById(`intro-gem-${i}`);
+                    if (gem && !gem.classList.contains('bg-bp-pink')) {
+                        gem.classList.remove('bg-zinc-900', 'border-bp-pink/50');
+                        gem.classList.add('bg-bp-pink', 'border-white', 'scale-125', 'shadow-[0_0_15px_#FF2E93]');
+                    }
+                }
+
+                if (progress >= 100) {
+                    clearInterval(introTimer);
+                    setTimeout(finishIntro, 250);
+                }
+            }, 38);
+        }
+
+        function finishIntro() {
+            if (isIntroFinished) return;
+            isIntroFinished = true;
+            clearInterval(introTimer);
+
+            const overlay = document.getElementById('intro-overlay');
+            const leftCurtain = document.getElementById('curtain-left');
+            const rightCurtain = document.getElementById('curtain-right');
+            const centerContent = document.getElementById('intro-center-content');
+            const skipBtn = document.getElementById('skip-intro-btn');
+
+            centerContent.style.opacity = '0';
+            centerContent.style.transform = 'scale(1.08)';
+            skipBtn.style.opacity = '0';
+            leftCurtain.classList.add('curtain-open-left');
+            rightCurtain.classList.add('curtain-open-right');
+
+            document.body.classList.remove('overflow-hidden');
+            document.body.classList.add('site-entered');
+            overlay.classList.add('pointer-events-none');
+
+            setTimeout(() => {
+                if (isIntroFinished) {
+                    overlay.classList.add('hidden');
+                }
+            }, 1100);
+        }
+
+        function replayIntro() {
+            switchTab('hero');
+            startIntroSequence();
+        }
+
+        // 0.5 導覽列分頁切換邏輯 (Tab Switching)
+        function switchTab(tabId) {
+            const panels = document.querySelectorAll('.tab-panel');
+            const targetPanel = document.getElementById(tabId);
+            if (!targetPanel) return;
+
+            panels.forEach(panel => {
+                panel.classList.add('hidden');
+            });
+            targetPanel.classList.remove('hidden');
+
+            // 更新桌面版導覽列啟用樣式
+            document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.add('nav-tab-active');
+                } else {
+                    btn.classList.remove('nav-tab-active');
+                }
+            });
+
+            // 更新手機版導覽列啟用樣式
+            document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
+                if (btn.dataset.tab === tabId) {
+                    btn.classList.add('bg-bp-pink/20', 'text-bp-pink');
+                } else {
+                    btn.classList.remove('bg-bp-pink/20', 'text-bp-pink');
+                }
+            });
+
+            // 關閉手機版下拉選單並回到分頁頂部
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) {
+                mobileMenu.classList.add('hidden');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 1. 成員資料庫
+        const membersData = [
+            {
+                id: 'jisoo',
+                stageName: 'JISOO',
+                koreanName: '김지수 · 金智秀',
+                role: '門面擔當 / 領唱',
+                birthday: '1995年1月3日',
+                nationality: '韓國',
+                solo: '《ME》 - 主打歌〈FLOWER (꽃)〉',
+                fashion: 'Dior 全球時裝與美妝大使、Cartier 全球大使',
+                bio: '擁有清亮獨特的沙啞嗓音與古典優雅的頂級美貌，作為團隊中的大姐總是以溫暖幽默的性格守護成員，個人單曲〈FLOWER〉更以標誌性「開花舞」席捲全球。',
+                accentColor: '#FF2E93',
+                photoUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/210928_Jisoo.jpg?width=800'
+            },
+            {
+                id: 'jennie',
+                stageName: 'JENNIE',
+                koreanName: '김제니 · 金珍妮',
+                role: '主饒舌 / 領唱',
+                birthday: '1996年1月16日',
+                nationality: '韓國',
+                solo: '《SOLO》 / 〈You & Me〉 / 〈Mantra〉',
+                fashion: 'CHANEL 全球品牌大使（「人間香奈兒」）',
+                bio: '具備極具爆發力的饒舌實力與慵懶性感的嗓音，舞台表現力與時尚敏銳度無與倫比，不僅是首位發行個人單曲的成員，更創下韓國女 Solo 歌手 MV 破十億觀看紀錄。',
+                accentColor: '#F4A6B8',
+                photoUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Kim_Jennie_(%EA%B9%80%EC%A0%9C%EB%8B%88)_05.jpg?width=800'
+            },
+            {
+                id: 'rose',
+                stageName: 'ROSÉ',
+                koreanName: '박채영 · 朴彩英',
+                role: '主唱 / 領舞',
+                birthday: '1997年2月11日',
+                nationality: '紐西蘭 / 韓國',
+                solo: '《R》 - 〈On The Ground〉 / 〈APT.〉',
+                fashion: 'Saint Laurent 全球首位大使、Tiffany & Co. 全球大使',
+                bio: '被譽為擁有「澳洲野玫瑰」與「蜜嗓」的靈魂主唱，擅長吉他與鋼琴自彈自唱，細膩深情的音色極具辨識度，個人單曲《APT.》更在全球掀起現象級熱潮。',
+                accentColor: '#FF2E93',
+                photoUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Blackpink_Ros%C3%A9_Rimowa_1.jpg?width=800'
+            },
+            {
+                id: 'lisa',
+                stageName: 'LISA',
+                koreanName: 'ลลิษา มโนบาล · 拉莉莎·瑪諾班',
+                role: '主舞 / 領饒舌 / 忙內',
+                birthday: '1997年3月27日',
+                nationality: '泰國',
+                solo: '《LALISA》 - 〈LALISA〉 / 〈MONEY〉 / 〈ROCKSTAR〉',
+                fashion: 'Louis Vuitton 品牌大使、BVLGARI 全球大使',
+                bio: 'K-POP 界公認的頂級舞蹈機器，擁有黃金比例身形與精準炸裂的舞蹈控制力，個人單曲〈MONEY〉在 Spotify 突破十億次串流，展現無可阻擋的全球巨星氣場。',
+                accentColor: '#F4A6B8',
+                photoUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/20240314_Lisa_Manoban_07.jpg?width=800'
+            }
+        ];
+
+        // 渲染成員卡片
+        function renderMembers() {
+            const grid = document.getElementById('members-grid');
+            grid.innerHTML = membersData.map((member, index) => `
+                <div onclick="openMemberModal(${index})" class="group bg-bp-dark rounded-3xl overflow-hidden border border-white/10 hover:border-bp-pink transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-bp-pink/25 cursor-pointer flex flex-col">
+                    <div class="relative h-80 overflow-hidden bg-zinc-900">
+                        <img src="${member.photoUrl}" alt="${member.stageName} 寫真照片" loading="lazy"
+                             onerror="this.onerror=null;this.src='https://placehold.co/600x800/111111/FF2E93?text=${member.stageName}';"
+                             class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-bp-dark via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-sm border border-bp-pink/40 text-xs font-bold text-bp-softpink">
+                            ${member.nationality}
+                        </div>
+                    </div>
+
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-baseline justify-between mb-1">
+                                <h3 class="font-display font-black text-2xl text-white group-hover:text-bp-pink transition-colors">${member.stageName}</h3>
+                                <span class="text-xs text-gray-400">${member.birthday}</span>
+                            </div>
+                            <p class="text-sm text-gray-300 font-medium mb-3">${member.koreanName}</p>
+                            <span class="inline-block px-3 py-1 rounded-lg bg-bp-pink/15 text-bp-pink text-xs font-bold mb-4">
+                                ${member.role}
+                            </span>
+                        </div>
+                        <div class="pt-3 border-t border-white/10 flex items-center justify-between text-xs text-bp-softpink font-bold">
+                            <span>查看詳細檔案</span>
+                            <span class="group-hover:translate-x-1 transition-transform">-&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 開啟成員 Modal 視窗
+        function openMemberModal(index) {
+            const m = membersData[index];
+            const modal = document.getElementById('member-modal');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+                <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start mb-6">
+                    <div class="w-28 h-36 rounded-2xl overflow-hidden border-2 border-bp-pink shrink-0 bg-zinc-900">
+                        <img src="${m.photoUrl}" alt="${m.stageName}"
+                             onerror="this.onerror=null;this.src='https://placehold.co/300x400/111111/FF2E93?text=${m.stageName}';"
+                             class="w-full h-full object-cover object-top">
+                    </div>
+                    <div class="text-center sm:text-left">
+                        <span class="px-3 py-1 rounded-full bg-bp-pink/20 text-bp-pink text-xs font-bold">${m.role}</span>
+                        <h3 class="font-display font-black text-3xl text-white mt-2">${m.stageName}</h3>
+                        <p class="text-bp-softpink font-medium">${m.koreanName}</p>
+                        <p class="text-xs text-gray-400 mt-1">生日：${m.birthday} ｜ 國籍：${m.nationality}</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-sm">
+                    <div class="p-4 rounded-2xl bg-black/80 border border-white/10">
+                        <div class="text-xs text-bp-pink font-bold mb-1">個人魅力與簡介</div>
+                        <p class="text-gray-300 leading-relaxed">${m.bio}</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="p-4 rounded-2xl bg-black/80 border border-white/10">
+                            <div class="text-xs text-bp-softpink font-bold mb-1">個人 Solo 代表作</div>
+                            <p class="text-white font-medium">${m.solo}</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-black/80 border border-white/10">
+                            <div class="text-xs text-bp-softpink font-bold mb-1">全球精品代言</div>
+                            <p class="text-white font-medium">${m.fashion}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeMemberModal(e) {
+            if (!e || e.target.id === 'member-modal') {
+                const modal = document.getElementById('member-modal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // 2. 熱門音樂與實際 YouTube 歌曲連結
+        const tracksData = [
+            {
+                title: 'DDU-DU DDU-DU',
+                album: 'SQUARE UP (2018)',
+                duration: '03:29',
+                views: '22億+ 觀看',
+                lyric: '“Hit you with that ddu-du ddu-du du!”',
+                youtubeUrl: 'https://www.youtube.com/watch?v=IHNzOHi8sJs&pp=ygUQZHVkdWR1IGJsYWNrcGluaw%3D%3D'
+            },
+            {
+                title: 'Kill This Love',
+                album: 'KILL THIS LOVE (2019)',
+                duration: '03:09',
+                views: '20億+ 觀看',
+                lyric: '“Let’s kill this love! Rum, pum, pum, pum, pum, pum, pum!”',
+                youtubeUrl: 'https://www.youtube.com/watch?v=2S24-y0Ij3Y&pp=ygUOa2lsbCB0aGlzIGxvdmU%3D'
+            },
+            {
+                title: 'How You Like That',
+                album: 'THE ALBUM (2020)',
+                duration: '03:01',
+                views: '13億+ 觀看',
+                lyric: '“Look at you, now look at me!”',
+                youtubeUrl: 'https://www.youtube.com/watch?v=ioNng23DkIM&pp=ygURaG93IHlvdSBsaWtlIHRoYXQ%3D'
+            },
+            {
+                title: 'Pink Venom',
+                album: 'BORN PINK (2022)',
+                duration: '03:06',
+                views: '9.2億+ 觀看',
+                lyric: '“Taste that pink venom, taste that pink venom — Get ’em, get ’em, get ’em!”',
+                youtubeUrl: 'https://www.youtube.com/watch?v=gQlMMD8auMs&pp=ygUKcGluayB2ZW5vbQ%3D%3D'
+            },
+            {
+                title: 'Shut Down',
+                album: 'BORN PINK (2022)',
+                duration: '02:55',
+                views: '6.8億+ 觀看',
+                lyric: '“Keep watching me shut it down!”',
+                youtubeUrl: 'https://www.youtube.com/watch?v=POe9SOEKotk&pp=ygUJc2h1dCBkb3du'
+            }
+        ];
+
+        let currentTrackIndex = 0;
+        let isPlaying = true;
+        let progressPercent = 25;
+
+        function renderTrackList() {
+            const listEl = document.getElementById('track-list');
+            listEl.innerHTML = tracksData.map((track, idx) => {
+                const isActive = idx === currentTrackIndex;
+                return `
+                    <div onclick="selectTrack(${idx})" class="p-4 sm:p-5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-4 ${
+                        isActive
+                        ? 'bg-bp-pink/15 border-bp-pink shadow-lg shadow-bp-pink/15'
+                        : 'bg-black/70 border-white/10 hover:border-bp-softpink/50'
+                    }">
+                        <div class="flex items-center gap-4 min-w-0">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center font-display font-black text-sm shrink-0 ${
+                                isActive ? 'bg-bp-pink text-white' : 'bg-zinc-900 text-gray-400'
+                            }">
+                                ${isActive && isPlaying ? 'PLAY' : `0${idx + 1}`}
+                            </div>
+                            <div class="truncate">
+                                <h4 class="font-display font-bold text-base sm:text-lg truncate ${isActive ? 'text-bp-pink' : 'text-white'}">${track.title}</h4>
+                                <p class="text-xs text-gray-400 truncate">${track.album} · <span class="text-bp-softpink">${track.views}</span></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 shrink-0">
+                            <a href="${track.youtubeUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-bp-pink border border-bp-pink/40 text-xs font-bold text-bp-softpink hover:text-white transition-colors">
+                                YouTube
+                            </a>
+                            <span class="text-xs font-display font-bold text-gray-400 hidden sm:inline">
+                                ${track.duration}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updatePlayerUI() {
+            const track = tracksData[currentTrackIndex];
+            document.getElementById('player-title').textContent = track.title;
+            document.getElementById('player-album').textContent = track.album;
+            document.getElementById('player-lyric').textContent = track.lyric;
+            document.getElementById('player-duration').textContent = track.duration;
+            const ytLink = document.getElementById('player-yt-link');
+            if (ytLink) {
+                ytLink.href = track.youtubeUrl;
+            }
+            renderTrackList();
+        }
+
+        function selectTrack(idx) {
+            currentTrackIndex = idx;
+            progressPercent = 10;
+            isPlaying = true;
+            syncPlayState();
+            updatePlayerUI();
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracksData.length;
+            progressPercent = 10;
+            updatePlayerUI();
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracksData.length) % tracksData.length;
+            progressPercent = 10;
+            updatePlayerUI();
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            syncPlayState();
+            renderTrackList();
+        }
+
+        function syncPlayState() {
+            const disc = document.getElementById('vinyl-disc');
+            const eq = document.getElementById('eq-bars');
+            const btn = document.getElementById('play-pause-btn');
+
+            if (isPlaying) {
+                disc.classList.remove('vinyl-paused');
+                eq.classList.add('eq-active');
+                btn.textContent = '暫停預覽';
+            } else {
+                disc.classList.add('vinyl-paused');
+                eq.classList.remove('eq-active');
+                btn.textContent = '繼續播放';
+            }
+        }
+
+        // 模擬進度條推進定時器
+        setInterval(() => {
+            if (!isPlaying) return;
+            progressPercent += 1;
+            if (progressPercent > 100) {
+                nextTrack();
+            }
+            document.getElementById('player-progress').style.width = `${progressPercent}%`;
+            const totalSec = 185;
+            const curSec = Math.floor((progressPercent / 100) * totalSec);
+            const mins = String(Math.floor(curSec / 60)).padStart(2, '0');
+            const secs = String(curSec % 60).padStart(2, '0');
+            document.getElementById('player-time').textContent = `${mins}:${secs}`;
+        }, 500);
+
+        // 3. 英雄區粉紅應援粒子噴發效果（無 Emoji）
+        function triggerHeartBurst() {
+            const labels = ['BLACKPINK', 'BLINK', 'PINK', 'IN YOUR AREA'];
+            for (let i = 0; i < 14; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.className = 'floating-particle font-display font-black text-xs sm:text-sm tracking-widest px-2.5 py-1 rounded-full bg-bp-pink/90 text-white shadow-[0_0_12px_#FF2E93] select-none';
+                    el.textContent = labels[Math.floor(Math.random() * labels.length)];
+                    el.style.left = `${10 + Math.random() * 80}vw`;
+                    el.style.animationDuration = `${2 + Math.random() * 1.5}s`;
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 3500);
+                }, i * 80);
+            }
+        }
+
+        // 4. 粉紅應援槌發光模式切換
+        let isLightstickOn = false;
+        function toggleLightstick() {
+            isLightstickOn = !isLightstickOn;
+            const body = document.body;
+            const graphic = document.getElementById('lightstick-graphic');
+            const status = document.getElementById('lightstick-status');
+            const btn = document.getElementById('lightstick-toggle-btn');
+
+            if (isLightstickOn) {
+                body.classList.add('lightstick-active');
+                graphic.classList.add('hammer-active', 'scale-110');
+                status.textContent = '目前狀態：粉紅應援光暈全開！BLACKPINK IN YOUR AREA';
+                status.classList.replace('text-gray-400', 'text-bp-pink');
+                btn.innerHTML = '<span>關閉粉紅光暈模式</span>';
+                btn.classList.add('bg-bp-pink', 'text-white');
+                triggerHeartBurst();
+            } else {
+                body.classList.remove('lightstick-active');
+                graphic.classList.remove('hammer-active', 'scale-110');
+                status.textContent = '目前狀態：待機中（點擊下方開關點亮全場）';
+                status.classList.replace('text-bp-pink', 'text-gray-400');
+                btn.innerHTML = '<span>開啟粉紅光暈模式</span>';
+                btn.classList.remove('bg-bp-pink', 'text-white');
+            }
+        }
+
+        // 5. BLINK 應援留言板邏輯
+        const initialMessages = [
+            { name: 'Taipei_BLINK', bias: 'OT4 全體應援', text: '永遠支持四位女王！期待下一次的台灣演唱會！BLACKPINK IN YOUR AREA！', time: '剛剛' },
+            { name: 'RosePetal_97', bias: 'ROSÉ 朴彩英', text: '彩英的歌聲永遠這麼治癒又有力量，每天都要單曲循環！', time: '5 分鐘前' },
+            { name: 'LALISA_TW', bias: 'LISA 拉莉莎', text: '舞台魅力無人能敵！跳舞的每個節拍都帥到讓人起雞皮疙瘩！', time: '12 分鐘前' }
+        ];
+
+        function renderFanBoard() {
+            const board = document.getElementById('fan-board');
+            board.innerHTML = initialMessages.map(msg => `
+                <div class="p-4 rounded-2xl bg-black/90 border border-white/10 hover:border-bp-pink/40 transition-colors">
+                    <div class="flex items-center justify-between gap-2 mb-1.5">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-white text-sm">${escapeHTML(msg.name)}</span>
+                            <span class="px-2 py-0.5 rounded-full bg-bp-pink/20 text-bp-softpink text-[11px] font-bold">${escapeHTML(msg.bias)}</span>
+                        </div>
+                        <span class="text-[11px] text-gray-500">${msg.time}</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">${escapeHTML(msg.text)}</p>
+                </div>
+            `).join('');
+        }
+
+        function submitFanMessage(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('fan-name');
+            const biasInput = document.getElementById('fan-bias');
+            const msgInput = document.getElementById('fan-message');
+
+            if (!nameInput.value.trim() || !msgInput.value.trim()) return;
+
+            initialMessages.unshift({
+                name: nameInput.value.trim(),
+                bias: biasInput.value,
+                text: msgInput.value.trim(),
+                time: '剛剛'
+            });
+
+            renderFanBoard();
+            msgInput.value = '';
+            triggerHeartBurst();
+            showToast('應援留言已成功發佈至留言牆！');
+        }
+
+        // XSS 安全轉義函式
+        function escapeHTML(str) {
+            return str.replace(/[&<>"']/g, match => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[match]));
+        }
+
+        // 自訂 Toast 提示
+        function showToast(message) {
+            const toast = document.getElementById('toast-box');
+            toast.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // 手機版選單切換
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 頁面載入初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            startIntroSequence();
+            renderMembers();
+            updatePlayerUI();
+            renderFanBoard();
+        });
+    </script>
+</body>
+</html>
